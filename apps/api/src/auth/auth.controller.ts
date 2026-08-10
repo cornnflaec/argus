@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpCode,
   Get,
   Post,
   Req,
@@ -56,5 +57,17 @@ export class AuthController {
     return {
       user,
     };
+  }
+
+  @Post('logout')
+  @HttpCode(204)
+  async logout(
+    @Res({ passthrough: true }) response: any,
+  ) {
+    response.clearCookie('argus_session', {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+    });
   }
 }

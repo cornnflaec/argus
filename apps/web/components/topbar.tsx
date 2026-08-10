@@ -1,12 +1,25 @@
 "use client";
 
-import { Bell, Search } from "lucide-react";
+import { Bell, Search, LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { logout } from "@/lib/auth";
 
 export function Topbar() {
+  const router = useRouter();
+
+  async function handleLogout() {
+    try {
+      await logout();
+    } finally {
+      router.replace("/login");
+      router.refresh();
+    }
+  }
+
   return (
     <header className="flex h-16 items-center justify-between border-b bg-background px-6">
       {/* Search */}
@@ -43,6 +56,15 @@ export function Topbar() {
               Financial Advisor
             </p>
           </div>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Sign out"
+            onClick={handleLogout}
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
         </div>
       </div>
     </header>

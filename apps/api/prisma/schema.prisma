@@ -14,5 +14,23 @@ model User {
   passwordHash String
   name         String
   createdAt    DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  updatedAt    DateTime @updatedAt
+  clients      Client[]
+}
+
+model Client {
+  id            String    @id @default(cuid())
+  name          String
+  email         String
+  contactNumber String?
+  location      String?
+  dateOfBirth   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@index([ownerId])
+  @@index([email])
 }
