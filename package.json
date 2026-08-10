@@ -16,6 +16,7 @@
     "turbo": "^2.10.8"
   },
   "dependencies": {
+    "@nestjs/jwt": "^11.0.2",
     "dotenv": "^17.4.2"
   }
 }

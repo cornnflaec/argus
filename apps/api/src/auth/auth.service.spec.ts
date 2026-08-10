@@ -9,6 +9,8 @@ jest.mock('../prisma.service', () => ({
   PrismaService: class PrismaService {},
 }));
 
+import { JwtService } from '@nestjs/jwt';
+
 import { AuthService } from './auth.service';
 import { PrismaService } from '../prisma.service';
 
@@ -20,8 +22,13 @@ describe('AuthService', () => {
     },
   };
 
+  const jwtMock = {
+    signAsync: jest.fn(),
+  };
+
   const authService = new AuthService(
     prismaMock as unknown as PrismaService,
+    jwtMock as unknown as JwtService,
   );
 
   it('should hash a password', async () => {

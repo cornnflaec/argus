@@ -1,9 +1,12 @@
 import {
   ConflictException,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 
 import * as argon2 from 'argon2';
+
+import { JwtService } from '@nestjs/jwt';
 
 import { PrismaService } from '../prisma.service';
 import { RegisterDto } from './dto/register.dto';
@@ -12,6 +15,7 @@ import { RegisterDto } from './dto/register.dto';
 export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
   ) {}
 
   async hashPassword(password: string): Promise<string> {
@@ -52,6 +56,63 @@ export class AuthService {
       id: user.id,
       name: user.name,
       email: user.email,
+    };
+  }
+
+  async getCurrentUser(userId: string) {
+    return this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
+      },
+    });
+  }
+
+  async login(email: string, password: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException(
+        'Invalid email or password',
+      );
+    }
+
+    const passwordValid = await this.verifyPassword(
+      password,
+      user.passwordHash,
+    );
+
+    if (!passwordValid) {
+      throw new UnauthorizedException(
+        'Invalid email or password',
+      );
+    }
+
+    const payload = {
+      sub: user.id,
+      email: user.email,
+    };
+
+    const accessToken = await this.jwtService.signAsync(
+      payload,
+    );
+
+    return {
+      accessToken,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
     };
   }
 }
