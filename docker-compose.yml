@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: argus-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: argus
+      POSTGRES_PASSWORD: argus_dev
+      POSTGRES_DB: argus
+    ports:
+      - "5432:5432"
+    volumes:
+      - argus_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  argus_postgres_data:
