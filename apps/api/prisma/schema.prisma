@@ -25,12 +25,65 @@ model Client {
   contactNumber String?
   location      String?
   dateOfBirth   DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
 
   ownerId String
   owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
+  policies Policy[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([ownerId])
   @@index([email])
+}
+
+model Policy {
+  id           String @id @default(cuid())
+  policyNumber String @unique
+
+  clientId String
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  policyOwner String
+  insured     String
+
+  issueDate  DateTime?
+  policyType String?
+  policyName String?
+
+  policyCurrency String?
+
+  faceAmount Decimal? @db.Decimal(18, 2)
+
+  premiumMode   String?
+  premiumAmount Decimal? @db.Decimal(18, 2)
+  excessPremium Decimal? @db.Decimal(18, 2)
+  totalPremium  Decimal? @db.Decimal(18, 2)
+
+  premiumDueDate DateTime?
+
+  lastPaymentAmount Decimal?  @db.Decimal(18, 2)
+  lastPaymentDate   DateTime?
+
+  vulTotalPaymentsMade Decimal? @db.Decimal(18, 2)
+
+  policyStatus   String?
+  lapseCeaseDate DateTime?
+
+  policyAdvanceBalance  Decimal?  @db.Decimal(18, 2)
+  prepaidAmount         Decimal?  @db.Decimal(18, 2)
+  fundCashValue         Decimal?  @db.Decimal(18, 2)
+  fundCashValueAsOfDate DateTime?
+
+  contactNumber  String?
+  email          String?
+  billingAddress String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([clientId])
+  @@index([policyStatus])
+  @@index([premiumDueDate])
 }

@@ -52,7 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Client: 'Client'
+  Client: 'Client',
+  Policy: 'Policy'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -90,12 +91,47 @@ export const ClientScalarFieldEnum = {
   contactNumber: 'contactNumber',
   location: 'location',
   dateOfBirth: 'dateOfBirth',
+  ownerId: 'ownerId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  ownerId: 'ownerId'
+  updatedAt: 'updatedAt'
 } as const
 
 export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+
+
+export const PolicyScalarFieldEnum = {
+  id: 'id',
+  policyNumber: 'policyNumber',
+  clientId: 'clientId',
+  policyOwner: 'policyOwner',
+  insured: 'insured',
+  issueDate: 'issueDate',
+  policyType: 'policyType',
+  policyName: 'policyName',
+  policyCurrency: 'policyCurrency',
+  faceAmount: 'faceAmount',
+  premiumMode: 'premiumMode',
+  premiumAmount: 'premiumAmount',
+  excessPremium: 'excessPremium',
+  totalPremium: 'totalPremium',
+  premiumDueDate: 'premiumDueDate',
+  lastPaymentAmount: 'lastPaymentAmount',
+  lastPaymentDate: 'lastPaymentDate',
+  vulTotalPaymentsMade: 'vulTotalPaymentsMade',
+  policyStatus: 'policyStatus',
+  lapseCeaseDate: 'lapseCeaseDate',
+  policyAdvanceBalance: 'policyAdvanceBalance',
+  prepaidAmount: 'prepaidAmount',
+  fundCashValue: 'fundCashValue',
+  fundCashValueAsOfDate: 'fundCashValueAsOfDate',
+  contactNumber: 'contactNumber',
+  email: 'email',
+  billingAddress: 'billingAddress',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PolicyScalarFieldEnum = (typeof PolicyScalarFieldEnum)[keyof typeof PolicyScalarFieldEnum]
 
 
 export const SortOrder = {

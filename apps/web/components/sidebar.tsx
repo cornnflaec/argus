@@ -2,13 +2,12 @@
 
 import {
   BarChart3,
-  FileText,
+  Image,
   LayoutDashboard,
   Mail,
+  Megaphone,
   Settings,
   Users,
-  Image,
-  Megaphone,
 } from "lucide-react";
 
 import Link from "next/link";
@@ -17,12 +16,12 @@ import { usePathname } from "next/navigation";
 const navigation = [
   {
     name: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: LayoutDashboard,
   },
   {
     name: "Clients",
-    href: "/clients",
+    href: "/dashboard/clients",
     icon: Users,
   },
   {
@@ -56,16 +55,19 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex h-screen w-64 flex-col border-r bg-sidebar">
+    <aside className="flex h-screen w-64 flex-col border-r bg-background">
       {/* Brand */}
-      <div className="flex h-16 items-center border-b px-6">
+      <div className="border-b p-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             A
           </div>
 
           <div>
-            <p className="font-semibold">Argus</p>
+            <p className="font-semibold">
+              Argus
+            </p>
+
             <p className="text-xs text-muted-foreground">
               Advisor Platform
             </p>
@@ -79,9 +81,10 @@ export function Sidebar() {
           const Icon = item.icon;
 
           const isActive =
-            item.href === "/"
-              ? pathname === "/"
-              : pathname.startsWith(item.href);
+            item.href === "/dashboard"
+              ? pathname === "/dashboard"
+              : pathname === item.href ||
+                pathname.startsWith(`${item.href}/`);
 
           return (
             <Link
@@ -94,6 +97,7 @@ export function Sidebar() {
               }`}
             >
               <Icon className="h-4 w-4" />
+
               {item.name}
             </Link>
           );

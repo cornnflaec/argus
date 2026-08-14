@@ -398,7 +398,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  Client: 'Client'
+  Client: 'Client',
+  Policy: 'Policy'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -414,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "client"
+    modelProps: "user" | "client" | "policy"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -566,6 +567,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Policy: {
+      payload: Prisma.$PolicyPayload<ExtArgs>
+      fields: Prisma.PolicyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PolicyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PolicyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        findFirst: {
+          args: Prisma.PolicyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PolicyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        findMany: {
+          args: Prisma.PolicyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>[]
+        }
+        create: {
+          args: Prisma.PolicyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        createMany: {
+          args: Prisma.PolicyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PolicyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>[]
+        }
+        delete: {
+          args: Prisma.PolicyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        update: {
+          args: Prisma.PolicyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        deleteMany: {
+          args: Prisma.PolicyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PolicyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PolicyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>[]
+        }
+        upsert: {
+          args: Prisma.PolicyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PolicyPayload>
+        }
+        aggregate: {
+          args: Prisma.PolicyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePolicy>
+        }
+        groupBy: {
+          args: Prisma.PolicyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PolicyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PolicyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PolicyCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -624,12 +699,47 @@ export const ClientScalarFieldEnum = {
   contactNumber: 'contactNumber',
   location: 'location',
   dateOfBirth: 'dateOfBirth',
+  ownerId: 'ownerId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  ownerId: 'ownerId'
+  updatedAt: 'updatedAt'
 } as const
 
 export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+
+
+export const PolicyScalarFieldEnum = {
+  id: 'id',
+  policyNumber: 'policyNumber',
+  clientId: 'clientId',
+  policyOwner: 'policyOwner',
+  insured: 'insured',
+  issueDate: 'issueDate',
+  policyType: 'policyType',
+  policyName: 'policyName',
+  policyCurrency: 'policyCurrency',
+  faceAmount: 'faceAmount',
+  premiumMode: 'premiumMode',
+  premiumAmount: 'premiumAmount',
+  excessPremium: 'excessPremium',
+  totalPremium: 'totalPremium',
+  premiumDueDate: 'premiumDueDate',
+  lastPaymentAmount: 'lastPaymentAmount',
+  lastPaymentDate: 'lastPaymentDate',
+  vulTotalPaymentsMade: 'vulTotalPaymentsMade',
+  policyStatus: 'policyStatus',
+  lapseCeaseDate: 'lapseCeaseDate',
+  policyAdvanceBalance: 'policyAdvanceBalance',
+  prepaidAmount: 'prepaidAmount',
+  fundCashValue: 'fundCashValue',
+  fundCashValueAsOfDate: 'fundCashValueAsOfDate',
+  contactNumber: 'contactNumber',
+  email: 'email',
+  billingAddress: 'billingAddress',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PolicyScalarFieldEnum = (typeof PolicyScalarFieldEnum)[keyof typeof PolicyScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -687,6 +797,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -856,6 +980,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   client?: Prisma.ClientOmit
+  policy?: Prisma.PolicyOmit
 }
 
 /* Types for Logging */
